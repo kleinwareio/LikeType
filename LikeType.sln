@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kleinware.LikeType", "Kleinware.LikeType\Kleinware.LikeType.csproj", "{3C15D49A-67DF-41F4-B338-B42140E3A994}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kleinware.LikeType.Tests", "Kleinware.LikeType.Tests\Kleinware.LikeType.Tests.csproj", "{94595CA1-DE87-4931-B98E-A2BF5BDC8F17}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3C15D49A-67DF-41F4-B338-B42140E3A994}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C15D49A-67DF-41F4-B338-B42140E3A994}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C15D49A-67DF-41F4-B338-B42140E3A994}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C15D49A-67DF-41F4-B338-B42140E3A994}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94595CA1-DE87-4931-B98E-A2BF5BDC8F17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94595CA1-DE87-4931-B98E-A2BF5BDC8F17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94595CA1-DE87-4931-B98E-A2BF5BDC8F17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94595CA1-DE87-4931-B98E-A2BF5BDC8F17}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
