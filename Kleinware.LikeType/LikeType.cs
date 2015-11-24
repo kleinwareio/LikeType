@@ -6,9 +6,12 @@
         private readonly TTarget _value;
         public TTarget Value { get { return _value; } }
 
+        private readonly bool _isValueNull;
+
         protected LikeType(TTarget value)
         {
             _value = value;
+            _isValueNull = ReferenceEquals(value, null);
         }
 
         public static bool operator ==(LikeType<TThis, TTarget> m1, LikeType<TThis, TTarget> m2)
@@ -40,16 +43,25 @@
             if (other == null)
                 return false;
 
+            if (_isValueNull)
+                return other._isValueNull;
+
             return Value.Equals(other.Value);
         }
 
         public override int GetHashCode()
         {
+            if (_isValueNull)
+                return 0;
+
             return Value.GetHashCode();
         }
 
         public override string ToString()
         {
+            if (_isValueNull)
+                return string.Empty;
+
             return Value.ToString();
         }
     }

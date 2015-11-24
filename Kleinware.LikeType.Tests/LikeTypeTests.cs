@@ -8,6 +8,7 @@ namespace Kleinware.LikeType
         private StringLikeType _main;
         private StringLikeType _same;
         private StringLikeType _different;
+        private StringLikeType _null;
         private OtherStringLikeType _other;
 
         [TestInitialize]
@@ -16,6 +17,7 @@ namespace Kleinware.LikeType
             _main = new StringLikeType("1");
             _same = new StringLikeType("1");
             _different = new StringLikeType("nope");
+            _null = new StringLikeType(null);
             _other = new OtherStringLikeType("1");
         }
 
@@ -36,7 +38,7 @@ namespace Kleinware.LikeType
         }
 
         [TestMethod]
-        public void Equals_WithMoneyInstanceButDifferentData_ReturnsFalse()
+        public void Equals_WithInstanceButDifferentData_ReturnsFalse()
         {
             Assert.IsFalse(_main.Equals(_different));
         }
@@ -51,6 +53,32 @@ namespace Kleinware.LikeType
         public void Equals_WithSameTypeDefButDifferentType_ReturnsFalse()
         {
             Assert.IsFalse(_main.Equals(_other));
+        }
+
+        [TestMethod]
+        public void Equals_WithThisBackingNull_ThenReturnsFalse()
+        {
+            var result = _null.Equals(_main);
+
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void Equals_WithOtherBackingNull_ThenReturnsFalse()
+        {
+            var result = _main.Equals(_null);
+
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void Equals_WithBothBackingNull_ThenReturnsTrue()
+        {
+            var otherNull = new StringLikeType(null);
+
+            var result = _null.Equals(otherNull);
+
+            Assert.IsTrue(result);
         }
 
         #endregion
@@ -131,6 +159,16 @@ namespace Kleinware.LikeType
             Assert.AreEqual(_main.GetHashCode(), _same.GetHashCode());
         }
 
+        [TestMethod]
+        public void GetHashCode_WithNullBackingValue_Returns0()
+        {
+            var result = _null.GetHashCode();
+
+            Assert.AreEqual(0, result);
+        }
+
+        #endregion
+
         #region Implicit Convertion
 
         [TestMethod]
@@ -141,10 +179,40 @@ namespace Kleinware.LikeType
             Assert.AreEqual(_main.Value, test);
         }
 
-        #endregion
+        [TestMethod]
+        public void ImplicitConversion_WithNullBackingValue_ReturnsDefault()
+        {
+            string value = _null;
+
+            Assert.AreEqual(default(string), value);
+        }
 
         #endregion
-        class StringLikeType : LikeType<StringLikeType,string> { public StringLikeType(string value) : base(value) { } }
-        class OtherStringLikeType : LikeType<OtherStringLikeType,string> { public OtherStringLikeType(string value) : base(value) { } }
+
+        #region ToString
+
+        [TestMethod]
+        public void ToString_WithValue_ThenReturnsValueAsString()
+        {
+            var intType = new IntLikeType(1);
+
+            var str = intType.ToString();
+
+            Assert.AreEqual("1", str);
+        }
+
+        [TestMethod]
+        public void ToString_WithNullBacking_ThenReturnsEmptyString()
+        {
+            var result = _null.ToString();
+
+            Assert.AreEqual(string.Empty, result);
+        }
+
+        #endregion
+
+        class StringLikeType : LikeType<StringLikeType, string> { public StringLikeType(string value) : base(value) { } }
+        class OtherStringLikeType : LikeType<OtherStringLikeType, string> { public OtherStringLikeType(string value) : base(value) { } }
+        class IntLikeType : LikeType<IntLikeType, int> { public IntLikeType(int value) : base(value) { } }
     }
 }
