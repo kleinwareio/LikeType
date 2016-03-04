@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>Kleinware.LikeType</id>
+    <id>$id$</id>
     <title>LikeType</title>
-    <version>1.0.2</version>
+    <version>$version$</version>
     <authors>Matt Klein</authors>
     <owners>Matt Klein</owners>
     <projectUrl>https://github.com/mattklein999/LikeType</projectUrl>
