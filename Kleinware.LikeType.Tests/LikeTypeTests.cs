@@ -223,8 +223,8 @@ namespace Kleinware.LikeType
 
         #endregion
 
-        class StringLikeType : LikeType<StringLikeType, string> { public StringLikeType(string value) : base(value) { } }
-        class OtherStringLikeType : LikeType<OtherStringLikeType, string> { public OtherStringLikeType(string value) : base(value) { } }
-        class IntLikeType : LikeType<IntLikeType, int> { public IntLikeType(int value) : base(value) { } }
+        class StringLikeType : LikeType<string> { public StringLikeType(string value) : base(value) { } }
+        class OtherStringLikeType : LikeType<string> { public OtherStringLikeType(string value) : base(value) { } }
+        class IntLikeType : LikeType<int> { public IntLikeType(int value) : base(value) { } }
     }
 }
