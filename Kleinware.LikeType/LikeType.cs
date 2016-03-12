@@ -36,10 +36,8 @@
             return t.Value;
         }
 
-        public override bool Equals(object obj)
+        public bool Equals(LikeType<TThis,TTarget> other)
         {
-            var other = obj as TThis;
-
             if (other == null)
                 return false;
 
@@ -47,6 +45,11 @@
                 return other._isValueNull;
 
             return Value.Equals(other.Value);
+        }
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as TThis);
         }
 
         public override int GetHashCode()

@@ -121,6 +121,12 @@ namespace Kleinware.LikeType
             Assert.IsFalse(_different == _main);
         }
 
+        [TestMethod]
+        public void EqualsOperator_WithDifferentTypesButSameBackingValue_ReturnsFalse()
+        {
+            Assert.IsFalse(_main == _other);
+        }
+
         #endregion
 
         #region NotEqualOperator
@@ -147,6 +153,12 @@ namespace Kleinware.LikeType
         public void NotEqual_WithValuesDifferent_ThenReturnsTrue()
         {
             Assert.IsTrue(_different != _main);
+        }
+
+        [TestMethod]
+        public void NotEqual_WithSameBackingValuebutDifferentType_ReturnsTrue()
+        {
+            Assert.IsTrue(_main != _other);
         }
 
         #endregion

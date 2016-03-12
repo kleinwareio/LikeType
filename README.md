@@ -1,3 +1,4 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/3sp5o4fuhspo616s/branch/master?svg=true)](https://ci.appveyor.com/project/mattklein999/liketype/branch/master)
 # LikeType
 
 Provides 'typedef' like behavior to simple C# classes.
