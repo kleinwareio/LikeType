@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Kleinware.LikeType
 {
@@ -21,14 +22,22 @@ namespace Kleinware.LikeType
             _other = new OtherStringLikeType("1");
         }
 
+        #region Constructor
+
+        [TestMethod, ExpectedException(typeof(ArgumentNullException))]
+        public void Constructor_WhenIsNullAllowedFalseAndNullValueGiven_ThrowsArgumentNullException()
+        {
+            new NullNotAllowedType(null);
+        }
+
+        #endregion
+
         #region Equals
 
         [TestMethod]
         public void Equals_WithSelf_ReturnsTrue()
         {
-            var result = _main.Equals(_main);
-
-            Assert.IsTrue(result);
+            Assert.IsTrue(_main.Equals(_main));
         }
 
         [TestMethod]
@@ -58,27 +67,19 @@ namespace Kleinware.LikeType
         [TestMethod]
         public void Equals_WithThisBackingNull_ThenReturnsFalse()
         {
-            var result = _null.Equals(_main);
-
-            Assert.IsFalse(result);
+            Assert.IsFalse(_null.Equals(_main));
         }
 
         [TestMethod]
         public void Equals_WithOtherBackingNull_ThenReturnsFalse()
         {
-            var result = _main.Equals(_null);
-
-            Assert.IsFalse(result);
+            Assert.IsFalse(_main.Equals(_null));
         }
 
         [TestMethod]
         public void Equals_WithBothBackingNull_ThenReturnsTrue()
         {
-            var otherNull = new StringLikeType(null);
-
-            var result = _null.Equals(otherNull);
-
-            Assert.IsTrue(result);
+            Assert.IsTrue(_null.Equals(new StringLikeType(null)));
         }
 
         #endregion
@@ -174,9 +175,7 @@ namespace Kleinware.LikeType
         [TestMethod]
         public void GetHashCode_WithNullBackingValue_Returns0()
         {
-            var result = _null.GetHashCode();
-
-            Assert.AreEqual(0, result);
+            Assert.AreEqual(0, _null.GetHashCode());
         }
 
         #endregion
@@ -186,17 +185,13 @@ namespace Kleinware.LikeType
         [TestMethod]
         public void ImplicitConversion_WhenComparedToValue_ThenAreEqual()
         {
-            string test = _main;
-
-            Assert.AreEqual(_main.Value, test);
+            Assert.AreEqual(_main.Value, _main);
         }
 
         [TestMethod]
         public void ImplicitConversion_WithNullBackingValue_ReturnsDefault()
         {
-            string value = _null;
-
-            Assert.AreEqual(default(string), value);
+            Assert.AreEqual(default(string), _null);
         }
 
         #endregion
@@ -206,25 +201,20 @@ namespace Kleinware.LikeType
         [TestMethod]
         public void ToString_WithValue_ThenReturnsValueAsString()
         {
-            var intType = new IntLikeType(1);
-
-            var str = intType.ToString();
-
-            Assert.AreEqual("1", str);
+            Assert.AreEqual("1", new IntLikeType(1).ToString());
         }
 
         [TestMethod]
         public void ToString_WithNullBacking_ThenReturnsEmptyString()
         {
-            var result = _null.ToString();
-
-            Assert.AreEqual(string.Empty, result);
+            Assert.AreEqual(string.Empty, _null.ToString());
         }
 
         #endregion
 
-        class StringLikeType : LikeType<string> { public StringLikeType(string value) : base(value) { } }
-        class OtherStringLikeType : LikeType<string> { public OtherStringLikeType(string value) : base(value) { } }
-        class IntLikeType : LikeType<int> { public IntLikeType(int value) : base(value) { } }
+        private class StringLikeType : LikeType<string> { public StringLikeType(string value) : base(value, true) { } }
+        private class OtherStringLikeType : LikeType<string> { public OtherStringLikeType(string value) : base(value, true) { } }
+        private class IntLikeType : LikeType<int> { public IntLikeType(int value) : base(value) { } }
+        private class NullNotAllowedType : LikeType<string> { public NullNotAllowedType(string value) : base(value) { } }
     }
 }

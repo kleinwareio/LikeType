@@ -2,19 +2,34 @@
 
 namespace Kleinware.LikeType
 {
+    /// <summary>
+    /// Provides typedef-like behavior for type T. Allows the elevating of simple types (like int or string) for use in domain models, while still behaving like the underlying type.
+    /// 
+    /// For example, Age : LikeType&lt;int&gt; { ... } will allow you to pass around an Age while getting all of the behavior of an int. 
+    /// 
+    /// The type T should be immutable.
+    /// </summary>
+    /// <typeparam name="T">The type to behave like. This type should be immutable.</typeparam>
     public abstract class LikeType<T>
     {
-        private readonly T _value;
         public T Value { get { return _value; } }
 
-        private readonly bool _isValueNull;
-        private readonly Type _type;
+        protected readonly Type Type;
 
-        protected LikeType(T value)
+        private readonly T _value;
+        private readonly bool _isValueNull;
+
+        /// <summary>
+        /// Tip: Name the public constructor parameter 'value' to allow serializers to automatically map the public property 'Value' to the constructor value.
+        /// </summary>
+        protected LikeType(T value, bool isNullAllowed = false)
         {
-            _value = value;
             _isValueNull = ReferenceEquals(value, null);
-            _type = GetType();
+            if (_isValueNull && !isNullAllowed)
+                throw new ArgumentNullException("value");
+
+            _value = value;
+            Type = GetType();
         }
 
         public static bool operator ==(LikeType<T> m1, LikeType<T> m2)
@@ -39,28 +54,44 @@ namespace Kleinware.LikeType
             return t.Value;
         }
 
-        public override bool Equals(object obj)
+        public sealed override bool Equals(object obj)
         {
             var other = obj as LikeType<T>;
 
             if (other == null)
                 return false;
 
-            if (_type != other._type)
+            if (Type != other.Type)
                 return false;
 
-            if (_isValueNull)
-                return other._isValueNull;
+            if (_isValueNull || other._isValueNull)
+                return _isValueNull == other._isValueNull;
 
-            return Value.Equals(other.Value);
+            return AreValuesEqual(_value, other.Value);
         }
 
-        public override int GetHashCode()
+        /// <summary>
+        /// Override to provide custom Equals checking. Neither 'value1' nor 'value2' will be null.
+        /// </summary>
+        protected virtual bool AreValuesEqual(T value1, T value2)
+        {
+            return value1.Equals(value2);
+        }
+
+        public sealed override int GetHashCode()
         {
             if (_isValueNull)
                 return 0;
 
-            return Value.GetHashCode();
+            return GetHashFromValue(_value);
+        }
+
+        /// <summary>
+        /// Override to provide custom HashCode generation. 'value' will not be null.
+        /// </summary>
+        protected virtual int GetHashFromValue(T value)
+        {
+            return value.GetHashCode();
         }
 
         public override string ToString()
@@ -68,7 +99,7 @@ namespace Kleinware.LikeType
             if (_isValueNull)
                 return string.Empty;
 
-            return Value.ToString();
+            return _value.ToString();
         }
     }
 }
