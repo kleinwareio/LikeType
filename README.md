@@ -39,7 +39,7 @@ The backing field is `readonly` and the backing type should be immutable.
     
 ## Requirements
 
-`LikeType` requires .NET 2.0. The tests need .NET 4.5. 
+`LikeType` is based on .Net Standard 2.0 and supports projects using .Net 4.6.1 and above or .Net Core 2.0 and above.  The test and example projects in this repository use .Net 8.0.
 
 ## Behavior
 

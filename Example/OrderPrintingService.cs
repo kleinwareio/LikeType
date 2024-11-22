@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
-using Ploeh.AutoFixture;
+using AutoFixture;
 
 namespace Example
 {
@@ -22,7 +22,7 @@ namespace Example
         {
             // Arrange
             // fixture creates test data for us
-            var fixture = new Ploeh.AutoFixture.Fixture();
+            var fixture = new Fixture();
             // Substutite creates mock objects for us to interact with
             var orderServiceMock = NSubstitute.Substitute.For<IOrderService>();
             var orderPrinterMock = NSubstitute.Substitute.For<IOrderPrinter>();
